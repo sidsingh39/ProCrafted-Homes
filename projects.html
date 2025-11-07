@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Projects | ProCrafted Homes</title>
+<link rel="stylesheet" href="style.css">
+<script defer src="projects.js"></script>
+</head>
+<body>
+
+<nav>
+  <div class="logo">ProCrafted Homes</div>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="contractors.html">Contractors</a></li>
+    <li><a href="projects.html" style="color:var(--secondary)">Projects</a></li>
+    <li><a href="tools.html">Tools</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<header class="hero-small">
+  <div class="hero-content">
+    <h1>Our Work Speaks for Itself</h1>
+    <p>From luxury villas to modern interiors — explore our finest projects.</p>
+  </div>
+</header>
+
+<section class="projects-section">
+  <h2 class="section-title">Featured Projects</h2>
+
+  <div class="filter-buttons">
+    <button class="filter-btn active" data-category="all">All</button>
+    <button class="filter-btn" data-category="villa">Villas</button>
+    <button class="filter-btn" data-category="interior">Interiors</button>
+    <button class="filter-btn" data-category="renovation">Renovations</button>
+    <button class="filter-btn" data-category="commercial">Commercial</button>
+  </div>
+
+  <div class="projects-grid" id="projectGrid">
+    <!-- Cards will be loaded here by JS -->
+  </div>
+</section>
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox">
+  <div class="lightbox-content">
+    <span class="lightbox-close">&times;</span>
+    <img id="lightbox-img" src="" alt="">
+    <div class="lightbox-text">
+      <h3 id="lightbox-title"></h3>
+      <p id="lightbox-desc"></p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  © 2025 ProCrafted Homes | Premium Construction & Design Solutions
+</footer>
+
+</body>
+</html>

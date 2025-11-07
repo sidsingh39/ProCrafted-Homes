@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tools | ProCrafted Homes</title>
+<link rel="stylesheet" href="style.css">
+<script defer src="costestimator.js"></script>
+</head>
+<body>
+
+<nav>
+  <div class="logo">ProCrafted Homes</div>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="contractors.html">Contractors</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="tools.html" style="color:var(--secondary)">Tools</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<section style="padding:60px 70px;">
+  <h2 style="font-family:'Playfair Display'; font-size:2.4rem; margin-bottom:30px;">
+    Smart Construction Cost Estimator
+  </h2>
+
+  <div id="wizard-container">
+    
+    <div id="progress" style="display:flex; gap:10px; margin-bottom:20px; justify-content:center;">
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+
+    <div id="estimator"
+         style="max-width:600px; background:#f9f9f9; padding:30px;
+                border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.05);
+                min-height:350px; overflow:hidden; position:relative;">
+
+      <!-- Step 1 -->
+      <div class="step" id="step1">
+        <h3>Step 1: Enter Project Area</h3>
+        <input id="area" type="number" placeholder="Enter area in sq.ft"
+               style="width:100%; padding:12px; margin-top:15px; border-radius:5px; border:1px solid #ddd;">
+        <button class="btn nextBtn" style="margin-top:20px;">Next</button>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="step" id="step2">
+        <h3>Step 2: Select Construction Quality</h3>
+        <select id="quality"
+                style="width:100%; padding:12px; margin-top:15px; border-radius:5px; border:1px solid #ddd;">
+          <option value="">Choose...</option>
+          <option value="basic">Basic (₹1,200/sq.ft)</option>
+          <option value="standard">Standard (₹1,800/sq.ft)</option>
+          <option value="premium">Premium (₹2,500/sq.ft)</option>
+        </select>
+        <div style="margin-top:20px;">
+          <button class="btn prevBtn">Back</button>
+          <button class="btn nextBtn" style="margin-left:10px;">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="step" id="step3">
+        <h3>Step 3: Select Finishing Type</h3>
+        <select id="finish"
+                style="width:100%; padding:12px; margin-top:15px; border-radius:5px; border:1px solid #ddd;">
+          <option value="">Choose...</option>
+          <option value="standard">Standard Finish (₹100/sq.ft)</option>
+          <option value="luxury">Luxury Finish (₹200/sq.ft)</option>
+        </select>
+        <div style="margin-top:20px;">
+          <button class="btn prevBtn">Back</button>
+          <button class="btn nextBtn" style="margin-left:10px;">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="step" id="step4">
+        <h3>Step 4: Estimated Cost</h3>
+        <p id="result" style="margin-top:20px; font-size:1.2rem;"></p>
+        <div id="suggestions" style="margin-top:40px;"></div>
+        <button class="btn prevBtn" style="margin-top:20px;">Back</button>
+      </div>
+
+    </div> <!-- estimator -->
+  </div> <!-- wizard-container -->
+
+</section>
+
+<footer>
+  © 2025 ProCrafted Homes | Premium Construction & Design Solutions
+</footer>
+
+</body>
+</html>
