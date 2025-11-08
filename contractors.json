@@ -1,0 +1,110 @@
+[
+  {
+    "name": "Rajesh Sharma",
+    "location": "Mumbai, Maharashtra",
+    "specialization": "Residential & Luxury Villas",
+    "rating": 4.8,
+    "priceRange": "₹1500 - ₹2500/sq.ft",
+    "category": "premium",
+    "image": "images/contractors/contractor1.jpg"
+  },
+  {
+    "name": "Ananya Desai",
+    "location": "Bangalore, Karnataka",
+    "specialization": "Modern Interiors & Turnkey Projects",
+    "rating": 4.6,
+    "priceRange": "₹1200 - ₹2000/sq.ft",
+    "category": "standard",
+    "image": "images/contractors/contractor2.jpg"
+  },
+  {
+    "name": "Arjun Mehta",
+    "location": "Delhi NCR",
+    "specialization": "Commercial Complexes & Retail Spaces",
+    "rating": 4.9,
+    "priceRange": "₹1800 - ₹2600/sq.ft",
+    "category": "premium",
+    "image": "images/contractors/contractor3.jpg"
+  },
+  {
+    "name": "Sneha Reddy",
+    "location": "Hyderabad, Telangana",
+    "specialization": "Luxury Interiors & Smart Homes",
+    "rating": 4.7,
+    "priceRange": "₹1400 - ₹2200/sq.ft",
+    "category": "premium",
+    "image": "images/contractors/contractor4.jpg"
+  },
+  {
+    "name": "Vikram Patel",
+    "location": "Ahmedabad, Gujarat",
+    "specialization": "Villa Construction & Structural Design",
+    "rating": 4.5,
+    "priceRange": "₹1000 - ₹1800/sq.ft",
+    "category": "standard",
+    "image": "images/contractors/contractor5.jpg"
+  },
+  {
+    "name": "Nisha Kapoor",
+    "location": "Pune, Maharashtra",
+    "specialization": "Interior Design & Space Planning",
+    "rating": 4.4,
+    "priceRange": "₹900 - ₹1600/sq.ft",
+    "category": "basic",
+    "image": "images/contractors/contractor6.jpg"
+  },
+  {
+    "name": "Aditya Khanna",
+    "location": "Chandigarh, Punjab",
+    "specialization": "Residential & Commercial Projects",
+    "rating": 4.8,
+    "priceRange": "₹1200 - ₹1900/sq.ft",
+    "category": "standard",
+    "image": "images/contractors/contractor7.jpg"
+  },
+  {
+    "name": "Pooja Iyer",
+    "location": "Chennai, Tamil Nadu",
+    "specialization": "Luxury Apartments & Modular Interiors",
+    "rating": 4.7,
+    "priceRange": "₹1500 - ₹2400/sq.ft",
+    "category": "premium",
+    "image": "images/contractors/contractor8.jpg"
+  },
+  {
+    "name": "Harshad Menon",
+    "location": "Kochi, Kerala",
+    "specialization": "Sustainable Homes & Eco-Friendly Designs",
+    "rating": 4.6,
+    "priceRange": "₹1100 - ₹1700/sq.ft",
+    "category": "standard",
+    "image": "images/contractors/contractor9.jpg"
+  },
+  {
+    "name": "Tanya Bansal",
+    "location": "Jaipur, Rajasthan",
+    "specialization": "Restoration & Heritage Projects",
+    "rating": 4.9,
+    "priceRange": "₹1300 - ₹2100/sq.ft",
+    "category": "premium",
+    "image": "images/contractors/contractor10.jpg"
+  },
+{
+    "name": "Manoj Pillai",
+    "location": "Thiruvananthapuram, Kerala",
+    "specialization": "Eco-friendly Coastal Constructions",
+    "rating": 4.5,
+    "priceRange": "₹1000 - ₹1600/sq.ft",
+    "category": "standard",
+    "image": "images/contractors/contractor11.jpg"
+  },
+  {
+    "name": "Kavita Joshi",
+    "location": "Indore, Madhya Pradesh",
+    "specialization": "Affordable Housing & Smart Layouts",
+    "rating": 4.6,
+    "priceRange": "₹900 - ₹1500/sq.ft",
+    "category": "basic",
+    "image": "images/contractors/contractor12.jpg"
+  }
+]

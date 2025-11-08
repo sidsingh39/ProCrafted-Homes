@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <title>Contractors | ProCrafted Homes</title>
 <link rel="stylesheet" href="style.css">
-<script defer src="contractorsdata.js"></script>
-<script defer src="main.js"></script>
 </head>
 <body>
 
-<nav>
-  <div class="logo">ProCrafted Homes</div>
+<nav class="fade-down">
+  <div class="logo">
+  <img src="images/logo.png" alt="ProCrafted Homes Logo">
+</div>
   <ul>
     <li><a href="index.html">Home</a></li>
     <li><a href="services.html">Services</a></li>
@@ -22,31 +22,32 @@
   </ul>
 </nav>
 
-<section style="padding: 60px 70px;">
-  <h2 style="font-family:'Playfair Display'; font-size:2.4rem; margin-bottom:20px;">Find Trusted Contractors</h2>
-  
-  <!-- Search & Filters -->
-  <div style="display:flex; gap:20px; margin-bottom:30px;">
-    <input id="searchBar" placeholder="Search by name, skill, or city" style="flex:2; padding:12px 15px; border:1px solid #ddd; border-radius:4px;">
-    <select id="filterCity" style="padding:12px 15px; border:1px solid #ddd; border-radius:4px;">
-      <option value="">All Cities</option>
+<section class="contractors-section fade-up">
+  <h2 class="reveal">Find Trusted Contractors</h2>
+
+  <div class="filter-bar fade-up">
+    <input id="searchBar" placeholder="Search by name, skill, or city">
+    <select id="cityFilter">
+      <option value="all">All Cities</option>
     </select>
   </div>
 
-  <!-- Contractor List -->
-  <div id="contractors-list"></div>
+  <div id="contractors-list" class="contractor-grid">
+    <!-- Contractors load dynamically -->
+  </div>
 </section>
 
-<footer>
+<footer class="fade-up">
   © 2025 ProCrafted Homes | Premium Construction & Design Solutions
 </footer>
 
-<!-- Firebase SDKs -->
+<!-- Contractor Data Script -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
   import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
 
-  // Your Firebase configuration
+  const USE_FIREBASE = false;
+
   const firebaseConfig = {
     apiKey: "AIzaSyBeccwySrja43f_q1nGjxekdxIq9ecsEvo",
     authDomain: "procrafted-homes.firebaseapp.com",
@@ -57,56 +58,128 @@
     appId: "1:496370643233:web:586bde30180cb3652f4e60"
   };
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
+  // RENDER CONTRACTORS
+ function populateContractors(contractors) {
+  const list = document.getElementById("contractors-list");
+  if (!list) {
+    console.error("Container #contractors-list not found in DOM!");
+    return;
+  }
 
-  // Fetch contractor data
-  const dbRef = ref(db);
+  const cityFilter = document.getElementById("cityFilter");
+  const searchBar = document.getElementById("searchBar");
 
-  get(child(dbRef, "contractors")).then((snapshot) => {
-    if (snapshot.exists()) {
-      const contractors = snapshot.val();
-      const container = document.getElementById("contractors-list");
+  // Debug check
+  console.log("Rendering contractors:", contractors.length);
 
-      container.innerHTML = "";
+  // Clear previous content
+  list.innerHTML = "";
 
-      Object.values(contractors).forEach(contractor => {
-        const card = document.createElement("div");
-        card.classList.add("contractor-card");
-        card.innerHTML = `
-          <img src="${contractor.image}" alt="${contractor.name}">
-          <h3>${contractor.name}</h3>
-          <p><strong>City:</strong> ${contractor.city}</p>
-          <p><strong>Rating:</strong> ⭐ ${contractor.rating}</p>
-          <p><strong>Specialties:</strong> ${contractor.specialties.join(", ")}</p>
-        `;
-        container.appendChild(card);
-      });
-    } else {
-      console.log("No data found");
-    }
-  }).catch((error) => {
-    console.error(error);
+  // Populate unique cities
+  const uniqueCities = [...new Set(contractors.map(c => c.location.split(",")[0].trim()))];
+  cityFilter.innerHTML = '<option value="all">All Cities</option>';
+  uniqueCities.forEach(city => {
+    const opt = document.createElement("option");
+    opt.value = city;
+    opt.textContent = city;
+    cityFilter.appendChild(opt);
   });
+
+  // Render function
+  function display(filtered) {
+    list.innerHTML = "";
+    if (!filtered || filtered.length === 0) {
+      list.innerHTML = "<p style='text-align:center;'>No contractors found.</p>";
+      return;
+    }
+
+    filtered.forEach((c, i) => {
+      const card = document.createElement("div");
+      card.className = "contractor-card fade-up visible";
+      card.style.animationDelay = `${i * 100}ms`;
+      card.innerHTML = `
+        <img src="${c.image || 'images/default-contractor.jpg'}" alt="${c.name}" style="width:100%; height:200px; object-fit:cover; border-radius:8px 8px 0 0;">
+        <div class="contractor-info" style="padding:15px;">
+          <h3>${c.name}</h3>
+          <p><strong>City:</strong> ${c.location}</p>
+          <p><strong>Expertise:</strong> ${c.specialization}</p>
+          <p><strong>Rating:</strong> ⭐ ${c.rating}</p>
+          <p><strong>Price:</strong> ${c.priceRange}</p>
+        </div>
+      `;
+      list.appendChild(card);
+    });
+  }
+
+  // Initial load
+  display(contractors);
+
+  // Filters
+  cityFilter.addEventListener("change", () => {
+    const city = cityFilter.value;
+    const filtered = city === "all"
+      ? contractors
+      : contractors.filter(c => c.location.includes(city));
+    display(filtered);
+  });
+
+  searchBar.addEventListener("input", e => {
+    const query = e.target.value.toLowerCase();
+    const filtered = contractors.filter(
+      c =>
+        c.name.toLowerCase().includes(query) ||
+        c.specialization.toLowerCase().includes(query) ||
+        c.location.toLowerCase().includes(query)
+    );
+    display(filtered);
+  });
+}
+
+
+  // FETCH DATA
+  if (!USE_FIREBASE) {
+    fetch("./contractors.json")
+      .then(res => {
+        if (!res.ok) throw new Error("File not found or invalid JSON path");
+        return res.json();
+      })
+      .then(data => {
+        console.log("✅ Contractors loaded:", data);
+        populateContractors(data);
+      })
+      .catch(err => console.error("❌ Error loading data:", err));
+  } else {
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const dbRef = ref(db);
+
+    get(child(dbRef, "contractors"))
+      .then(snapshot => {
+        if (snapshot.exists()) {
+          populateContractors(Object.values(snapshot.val()));
+        } else {
+          console.warn("⚠️ No contractor data found in Firebase.");
+        }
+      })
+      .catch(error => console.error("❌ Firebase error:", error));
+  }
 </script>
+
+<!-- ANIMATION SCRIPT -->
 <script>
-  const elements = document.querySelectorAll(
-    ".fade-up, .slide-in-left, .slide-in-right, .zoom-in, .fade-glow, .reveal"
-  );
+  const elements = document.querySelectorAll(".fade-up, .fade-down, .slide-in-left, .slide-in-right, .zoom-in, .reveal");
 
   function animateOnScroll() {
     elements.forEach(el => {
       const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight - 100) {
-        el.classList.add("visible");
-      }
+      if (rect.top < window.innerHeight - 100) el.classList.add("visible");
     });
   }
 
   window.addEventListener("scroll", animateOnScroll);
   window.addEventListener("load", animateOnScroll);
 </script>
+
 
 </body>
 </html>

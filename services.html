@@ -8,8 +8,10 @@
 </head>
 <body>
 
-<nav>
-  <div class="logo">ProCrafted Homes</div>
+<nav class="fade-down">
+  <div class="logo">
+  <img src="images/logo.png" alt="ProCrafted Homes Logo">
+</div>
   <ul>
     <li><a href="index.html">Home</a></li>
     <li><a href="services.html" style="color:var(--secondary)">Services</a></li>
@@ -21,51 +23,75 @@
   </ul>
 </nav>
 
-<header class="hero-small">
-  <div class="hero-content">
+<header class="hero-small fade-up">
+  <div class="hero-content reveal">
     <h1>Our Expertise</h1>
     <p>Crafting spaces that redefine luxury, functionality, and timeless design.</p>
   </div>
 </header>
 
-<section class="services-section">
-  <h2 class="section-title">What We Offer</h2>
+<section class="services-section fade-up">
+  <h2 class="reveal">What We Offer</h2>
 
   <div class="services-grid">
-    <div class="service-card">
-      <i class="fas fa-hard-hat"></i>
+    <div class="service-card fade-up">
+      <i class="icon" data-lucide="building-2"></i>
       <h3>Construction</h3>
       <p>Complete construction services — from foundation to finish — handled by top engineers and craftsmen.</p>
     </div>
 
-    <div class="service-card">
-      <i class="fas fa-paint-roller"></i>
+    <div class="service-card fade-up">
+      <i class="icon" data-lucide="wrench"></i>
       <h3>Renovation</h3>
       <p>Transform existing spaces into modern, efficient, and aesthetic masterpieces that match your lifestyle.</p>
     </div>
 
-    <div class="service-card">
-      <i class="fas fa-couch"></i>
+    <div class="service-card fade-up">
+      <i class="icon" data-lucide="sofa"></i>
       <h3>Interior Design</h3>
       <p>Luxury interiors that combine beauty, comfort, and personality — tailored to your vision.</p>
     </div>
 
-    <div class="service-card">
-      <i class="fas fa-drafting-compass"></i>
+    <div class="service-card fade-up">
+      <i class="icon" data-lucide="ruler"></i>
       <h3>Architecture & Planning</h3>
       <p>Intelligent planning, sustainable design, and efficient space utilization for residential and commercial projects.</p>
     </div>
 
-    <div class="service-card">
-      <i class="fas fa-plug"></i>
+    <div class="service-card fade-up">
+      <i class="icon" data-lucide="droplets"></i>
       <h3>Electrical & Plumbing</h3>
       <p>Reliable infrastructure systems for safety, longevity, and seamless function across every project.</p>
     </div>
 
-    <div class="service-card">
-      <i class="fas fa-kitchen-set"></i>
+    <div class="service-card fade-up">
+      <i class="icon" data-lucide="utensils-crossed"></i>
       <h3>Modular Kitchens</h3>
       <p>Custom-designed kitchens that bring elegance, durability, and convenience to everyday living.</p>
+    </div>
+
+    <div class="service-card fade-up">
+      <i class="icon" data-lucide="trees"></i>
+      <h3>Landscape & Exterior Design</h3>
+      <p>Outdoor planning solutions — from gardens to façades — blending functionality with natural beauty.</p>
+    </div>
+
+    <div class="service-card fade-up">
+      <i class="icon" data-lucide="wifi"></i>
+      <h3>Smart Home Integration</h3>
+      <p>Advanced automation for lighting, climate, and security — enhancing comfort through technology.</p>
+    </div>
+
+    <div class="service-card fade-up">
+      <i class="icon" data-lucide="clipboard-list"></i>
+      <h3>Project Management</h3>
+      <p>End-to-end project coordination ensuring timely delivery, transparent budgeting, and flawless execution across every phase.</p>
+    </div>
+
+    <div class="service-card fade-up">
+      <i class="icon" data-lucide="leaf"></i>
+      <h3>Sustainable Solutions</h3>
+      <p>Eco-conscious designs and materials that minimize environmental impact while maximizing efficiency and comfort.</p>
     </div>
   </div>
 </section>
@@ -73,22 +99,32 @@
 <footer>
   © 2025 ProCrafted Homes | Premium Construction & Design Solutions
 </footer>
+
+<!-- Animation Script -->
 <script>
-  const elements = document.querySelectorAll(
-    ".fade-up, .slide-in-left, .slide-in-right, .zoom-in, .fade-glow, .reveal"
-  );
+  document.addEventListener("DOMContentLoaded", () => {
+    const elements = document.querySelectorAll(
+      ".fade-up, .fade-down, .slide-in-left, .slide-in-right, .zoom-in, .reveal"
+    );
 
-  function animateOnScroll() {
-    elements.forEach(el => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight - 100) {
-        el.classList.add("visible");
-      }
-    });
-  }
+    function animateOnScroll() {
+      elements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) {
+          el.classList.add("visible");
+        }
+      });
+    }
 
-  window.addEventListener("scroll", animateOnScroll);
-  window.addEventListener("load", animateOnScroll);
+    window.addEventListener("scroll", animateOnScroll);
+    window.addEventListener("load", animateOnScroll);
+  });
+</script>
+
+<!-- Icons -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  lucide.createIcons();
 </script>
 
 </body>

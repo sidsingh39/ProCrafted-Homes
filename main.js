@@ -74,3 +74,6 @@ searchInput?.addEventListener("input", filterContractors);
 cityFilter?.addEventListener("change", filterContractors);
 
 renderContractors(contractors);
+
+
+

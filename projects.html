@@ -8,8 +8,10 @@
 </head>
 <body>
 
-<nav>
-  <div class="logo">ProCrafted Homes</div>
+<nav class="fade-down">
+ <div class="logo">
+  <img src="images/logo.png" alt="ProCrafted Homes Logo">
+</div>
   <ul>
     <li><a href="index.html">Home</a></li>
     <li><a href="services.html">Services</a></li>
@@ -21,17 +23,17 @@
   </ul>
 </nav>
 
-<header class="hero-small">
-  <div class="hero-content">
+<header class="hero-small fade-up">
+  <div class="hero-content reveal">
     <h1>Our Work Speaks for Itself</h1>
     <p>From luxury villas to modern interiors — explore our finest projects.</p>
   </div>
 </header>
 
-<section class="projects-section">
-  <h2 class="section-title">Featured Projects</h2>
+<section class="projects-section fade-up">
+  <h2 class="section-title reveal">Featured Projects</h2>
 
-  <div class="filter-buttons">
+  <div class="filter-buttons slide-in-left">
     <button class="filter-btn active" data-category="all">All</button>
     <button class="filter-btn" data-category="villa">Villas</button>
     <button class="filter-btn" data-category="interior">Interiors</button>
@@ -39,13 +41,14 @@
     <button class="filter-btn" data-category="commercial">Commercial</button>
   </div>
 
-  <div class="projects-grid" id="projectGrid">
+  <div class="projects-grid fade-up" id="projectGrid">
     <!-- Cards will be loaded here by JS -->
   </div>
 </section>
+
 <!-- Lightbox -->
 <div id="lightbox" class="lightbox">
-  <div class="lightbox-content">
+  <div class="lightbox-content zoom-in">
     <span class="lightbox-close">&times;</span>
     <img id="lightbox-img" src="" alt="">
     <div class="lightbox-text">
@@ -58,22 +61,26 @@
 <footer>
   © 2025 ProCrafted Homes | Premium Construction & Design Solutions
 </footer>
+
+<!-- Animation Script -->
 <script>
-  const elements = document.querySelectorAll(
-    ".fade-up, .slide-in-left, .slide-in-right, .zoom-in, .fade-glow, .reveal"
-  );
+  document.addEventListener("DOMContentLoaded", () => {
+    const elements = document.querySelectorAll(
+      ".fade-up, .slide-in-left, .slide-in-right, .zoom-in, .fade-down, .reveal"
+    );
 
-  function animateOnScroll() {
-    elements.forEach(el => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight - 100) {
-        el.classList.add("visible");
-      }
-    });
-  }
+    function animateOnScroll() {
+      elements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) {
+          el.classList.add("visible");
+        }
+      });
+    }
 
-  window.addEventListener("scroll", animateOnScroll);
-  window.addEventListener("load", animateOnScroll);
+    window.addEventListener("scroll", animateOnScroll);
+    window.addEventListener("load", animateOnScroll);
+  });
 </script>
 
 </body>

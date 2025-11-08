@@ -7,8 +7,10 @@
 </head>
 <body>
 
-<nav>
-  <div class="logo">ProCrafted Homes</div>
+<nav class="fade-down">
+  <div class="logo">
+  <img src="images/logo.png" alt="ProCrafted Homes Logo">
+</div>
   <ul>
     <li><a href="index.html">Home</a></li>
     <li><a href="services.html">Services</a></li>
@@ -21,16 +23,19 @@
 </nav>
 
 <!-- HERO SECTION -->
-<section class="about-hero fade-in" style="text-align:center; padding:80px 60px; background:#f9f9f9;">
-  <h1 style="font-family:'Playfair Display'; font-size:2.8rem;">We Don’t Just Build Homes — We Build Trust.</h1>
-  <p style="max-width:700px; margin:auto; margin-top:15px; font-size:1.1rem; color:#555;">
+<section class="about-hero fade-up" style="text-align:center; padding:80px 60px; background:#f9f9f9;">
+  <h1 class="reveal" style="font-family:'Playfair Display'; font-size:2.8rem;">
+    We Don’t Just Build Homes — We Build Trust.
+  </h1>
+  <p class="fade-up" style="max-width:700px; margin:auto; margin-top:15px; font-size:1.1rem; color:#555;">
     At ProCrafted Homes, our mission is to craft timeless spaces that blend creativity, precision, and care.
   </p>
 </section>
 
 <!-- WHO WE ARE -->
 <section class="about-content fade-up" style="display:flex; align-items:center; gap:50px; padding:60px 70px; flex-wrap:wrap;">
-  <img src="images/projects/villa1.jpg" alt="About Us" class="slide-in-left" style="width:45%; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1);">
+  <img src="images/projects/villa1.jpg" alt="About Us" class="slide-in-left"
+       style="width:45%; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1);">
   <div class="slide-in-right" style="flex:1; min-width:300px;">
     <h2 style="font-family:'Playfair Display'; margin-bottom:15px;">Who We Are</h2>
     <p style="line-height:1.7;">
@@ -42,56 +47,46 @@
 
 <!-- MISSION / VISION / VALUES -->
 <section class="values fade-up" style="display:flex; justify-content:center; gap:30px; flex-wrap:wrap; padding:60px 70px; background:#fff;">
-  <div class="value-card slide-in-left" style="flex:1; min-width:250px; max-width:300px; padding:25px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.05); text-align:center;">
+  <div class="value-card slide-in-left"
+       style="flex:1; min-width:250px; max-width:300px; padding:25px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.05); text-align:center;">
     <h3>Our Mission</h3>
     <p>To deliver lasting quality through thoughtful design and precise construction.</p>
   </div>
-  <div class="value-card fade-up" style="flex:1; min-width:250px; max-width:300px; padding:25px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.05); text-align:center;">
+  <div class="value-card fade-up"
+       style="flex:1; min-width:250px; max-width:300px; padding:25px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.05); text-align:center;">
     <h3>Our Vision</h3>
     <p>To redefine modern living through architecture that inspires and endures.</p>
   </div>
-  <div class="value-card slide-in-right" style="flex:1; min-width:250px; max-width:300px; padding:25px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.05); text-align:center;">
+  <div class="value-card slide-in-right"
+       style="flex:1; min-width:250px; max-width:300px; padding:25px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.05); text-align:center;">
     <h3>Our Values</h3>
     <p>Integrity, craftsmanship, and trust form the foundation of every project we undertake.</p>
   </div>
 </section>
 
 <footer>
-  © 2025 ProCrafted Homes | Built with Precision and Passion
+  © 2025 ProCrafted Homes | Premium Construction & Design Solutions
 </footer>
 
 <!-- ANIMATION SCRIPT -->
 <script>
-  const animatedElements = document.querySelectorAll('.fade-up, .fade-in, .slide-in-left, .slide-in-right');
+  document.addEventListener("DOMContentLoaded", () => {
+    const elements = document.querySelectorAll(
+      ".fade-up, .fade-down, .slide-in-left, .slide-in-right, .zoom-in, .reveal"
+    );
 
-  function animateOnScroll() {
-    animatedElements.forEach(el => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight - 100) {
-        el.classList.add('visible');
-      }
-    });
-  }
+    function animateOnScroll() {
+      elements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) {
+          el.classList.add("visible");
+        }
+      });
+    }
 
-  window.addEventListener('scroll', animateOnScroll);
-  window.addEventListener('load', animateOnScroll);
-</script>
-<script>
-  const elements = document.querySelectorAll(
-    ".fade-up, .slide-in-left, .slide-in-right, .zoom-in, .fade-glow, .reveal"
-  );
-
-  function animateOnScroll() {
-    elements.forEach(el => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight - 100) {
-        el.classList.add("visible");
-      }
-    });
-  }
-
-  window.addEventListener("scroll", animateOnScroll);
-  window.addEventListener("load", animateOnScroll);
+    window.addEventListener("scroll", animateOnScroll);
+    window.addEventListener("load", animateOnScroll);
+  });
 </script>
 
 </body>

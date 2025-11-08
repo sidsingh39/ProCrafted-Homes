@@ -9,7 +9,9 @@
 <body>
 
 <nav>
-  <div class="logo">ProCrafted Homes</div>
+  <div class="logo">
+  <img src="images/logo.png" alt="ProCrafted Homes Logo">
+</div>
   <ul>
     <li><a href="index.html">Home</a></li>
     <li><a href="services.html">Services</a></li>
@@ -21,10 +23,24 @@
   </ul>
 </nav>
 
-<section class="tools-section">
-  <h2>Smart Construction Cost Estimator</h2>
+<!-- HERO SECTION -->
+<section class="tools-hero fade-up">
+  <div class="bg-icons">
+    <i data-lucide="ruler" class="icon"></i>
+    <i data-lucide="hammer" class="icon"></i>
+    <i data-lucide="home" class="icon"></i>
+  </div>
 
-  <div class="tools-container">
+  <h1>Smart Construction Cost Estimator</h1>
+  <p>Plan your project budget with accuracy — no surprises, just clarity.</p>
+</section>
+
+<div class="divider-fade"></div>
+
+<!-- ESTIMATOR SECTION -->
+<section class="tools-section fade-up">
+  <div class="estimator-container">
+    <!-- Progress Dots -->
     <div id="progress" class="progress-dots">
       <div class="dot active"></div>
       <div class="dot"></div>
@@ -32,14 +48,16 @@
       <div class="dot"></div>
     </div>
 
+    <!-- Estimator Box -->
     <div id="estimator" class="estimator-box">
-
-      <!-- Step 1 -->
-      <div class="step" id="step1">
+      <div class="step active" id="step1">
         <h3>Step 1: Enter Project Area</h3>
         <input id="area" type="number" placeholder="Enter area in sq.ft">
         <button class="btn nextBtn">Next</button>
       </div>
+    </div>
+  </div>
+</section>
 
       <!-- Step 2 -->
       <div class="step" id="step2">
@@ -81,28 +99,72 @@
     </div>
   </div>
 </section>
+<div class="divider-fade"></div>
+
+<section class="why-estimator fade-up">
+  <h2>Why Use Our Cost Estimator?</h2>
+  <div class="why-grid">
+    <div class="why-item">
+      <h3>💰 Transparent Budgeting</h3>
+      <p>Know your project costs before you begin — no hidden surprises.</p>
+    </div>
+    <div class="why-item">
+      <h3>🏗️ Realistic Estimates</h3>
+      <p>Based on current market rates and real construction data.</p>
+    </div>
+    <div class="why-item">
+      <h3>⚡ Instant Results</h3>
+      <p>Get your estimate in seconds — accurate and easy to understand.</p>
+    </div>
+  </div>
+</section>
+<div class="divider-fade"></div>
 
 
 <footer>
   © 2025 ProCrafted Homes | Premium Construction & Design Solutions
 </footer>
 <script>
+  function animateOnScroll() {
   const elements = document.querySelectorAll(
-    ".fade-up, .slide-in-left, .slide-in-right, .zoom-in, .fade-glow, .reveal"
+    ".fade-up, .slide-in-left, .slide-in-right, .zoom-in, .fade-glow, .reveal, .divider-fade"
   );
 
-  function animateOnScroll() {
-    elements.forEach(el => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight - 100) {
-        el.classList.add("visible");
-      }
-    });
-  }
+  elements.forEach((el, index) => {
+    const rect = el.getBoundingClientRect();
 
-  window.addEventListener("scroll", animateOnScroll);
-  window.addEventListener("load", animateOnScroll);
+    // Regular scroll trigger
+    if (rect.top < window.innerHeight - 100) {
+      el.classList.add("visible");
+    }
+
+    // 🔥 Force last divider to animate immediately
+    if (index === elements.length - 1 && el.classList.contains("divider-fade")) {
+      el.classList.add("visible");
+    }
+  });
+}
+
+window.addEventListener("scroll", animateOnScroll);
+window.addEventListener("load", animateOnScroll);
+
+  // Parallax effect for all dividers
+window.addEventListener("scroll", () => {
+  const dividers = document.querySelectorAll(".divider-fade");
+  const scrollY = window.scrollY;
+  const speed = 0.2; // adjust for intensity
+
+  dividers.forEach(divider => {
+    divider.style.backgroundPositionY = `${scrollY * speed}px`;
+  });
+});
+
 </script>
-
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    lucide.createIcons();
+  });
+</script>
 </body>
 </html>

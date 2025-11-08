@@ -72,40 +72,41 @@ function suggestContractors(category) {
   const suggestionDiv = document.getElementById("suggestions");
   suggestionDiv.innerHTML = `<h4>Recommended Contractors for You</h4>`;
 
-  if (typeof contractors === "undefined") {
-    suggestionDiv.innerHTML += `<p style="margin-top:10px;">(Contractor data unavailable)</p>`;
-    return;
-  }
+  fetch("contractors.json")
+    .then(res => res.json())
+    .then(data => {
+      let matches = [];
 
-  const matches = contractors.filter(c => c.category === category);
-  
-  if (matches.length === 0) {
-    suggestionDiv.innerHTML += `<p style="margin-top:10px;">No matching contractors found. Try another quality type.</p>`;
-    return;
-  }
+      if (category === "premium") {
+        matches = data.filter(c => c.rating >= 4.5);
+      } else if (category === "standard") {
+        matches = data.filter(c => c.rating >= 4.0 && c.rating < 4.5);
+      } else {
+        matches = data;
+      }
 
-  matches.forEach(c => {
-    const card = document.createElement("div");
-    card.style = `
-      border:1px solid #eee;
-      padding:15px;
-      margin-top:15px;
-      border-radius:8px;
-      background:white;
-      box-shadow:0 2px 6px rgba(0,0,0,0.05);
-    `;
-    card.innerHTML = `
-      <div style="display:flex; align-items:center; gap:20px;">
-        <img src="${c.image}" style="width:70px; height:70px; border-radius:50%;">
-        <div>
-          <h4 style="font-family:'Playfair Display'; margin-bottom:5px;">${c.name}</h4>
-          <p>${c.city} • ⭐ ${c.rating}</p>
-          <p style="font-size:0.9rem; opacity:0.8;">${c.specialties.join(", ")}</p>
-        </div>
-      </div>
-    `;
-    suggestionDiv.appendChild(card);
-  });
+      if (matches.length === 0) {
+        suggestionDiv.innerHTML += `<p style="margin-top:10px;">No matching contractors found for this quality type.</p>`;
+        return;
+      }
+
+      matches.forEach(c => {
+        const card = document.createElement("div");
+        card.classList.add("contractor-card");
+        card.innerHTML = `
+          <h4>${c.name}</h4>
+          <p><strong>Location:</strong> ${c.location}</p>
+          <p><strong>Expertise:</strong> ${c.specialization}</p>
+          <p><strong>Rating:</strong> ⭐ ${c.rating}</p>
+          <p><strong>Price Range:</strong> ${c.priceRange}</p>
+        `;
+        suggestionDiv.appendChild(card);
+      });
+    })
+    .catch(err => {
+      console.error("Error loading contractor data:", err);
+      suggestionDiv.innerHTML += `<p style="margin-top:10px;">Unable to load contractor details right now.</p>`;
+    });
 }
 
 
