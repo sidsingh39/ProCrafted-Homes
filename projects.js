@@ -18,10 +18,22 @@ const projects = [
     desc: "Complete corporate workspace transformation."
   },
   {
+    title: "Corporate Tower Upgrade",
+    category: "commercial",
+    image: "images/projects/commercial2.jpg",
+    desc: "Redesigned workspace interiors to enhance functionality and brand appeal."
+  },
+  {
     title: "Classic Home Renovation",
     category: "renovation",
     image: "images/projects/reno1.jpg",
     desc: "Restored colonial home with contemporary interiors."
+  },
+  {
+    title: "Modern Kitchen Renovation",
+    category: "renovation",
+    image: "images/projects/reno2.jpg",
+    desc:"Redefined kitchen spaces crafted with precision and poise.",
   },
   {
     title: "Luxury Penthouse",
