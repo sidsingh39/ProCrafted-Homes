@@ -34,12 +34,62 @@
   </div>
 
   <!-- Contractor List -->
-  <div id="contractorContainer"></div>
+  <div id="contractors-list"></div>
 </section>
 
 <footer>
   © 2025 ProCrafted Homes | Premium Construction & Design Solutions
 </footer>
+
+<!-- Firebase SDKs -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+  import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
+
+  // Your Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyBeccwySrja43f_q1nGjxekdxIq9ecsEvo",
+    authDomain: "procrafted-homes.firebaseapp.com",
+    databaseURL: "https://procrafted-homes-default-rtdb.firebaseio.com",
+    projectId: "procrafted-homes",
+    storageBucket: "procrafted-homes.firebasestorage.app",
+    messagingSenderId: "496370643233",
+    appId: "1:496370643233:web:586bde30180cb3652f4e60"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  // Fetch contractor data
+  const dbRef = ref(db);
+
+  get(child(dbRef, "contractors")).then((snapshot) => {
+    if (snapshot.exists()) {
+      const contractors = snapshot.val();
+      const container = document.getElementById("contractors-list");
+
+      container.innerHTML = "";
+
+      Object.values(contractors).forEach(contractor => {
+        const card = document.createElement("div");
+        card.classList.add("contractor-card");
+        card.innerHTML = `
+          <img src="${contractor.image}" alt="${contractor.name}">
+          <h3>${contractor.name}</h3>
+          <p><strong>City:</strong> ${contractor.city}</p>
+          <p><strong>Rating:</strong> ⭐ ${contractor.rating}</p>
+          <p><strong>Specialties:</strong> ${contractor.specialties.join(", ")}</p>
+        `;
+        container.appendChild(card);
+      });
+    } else {
+      console.log("No data found");
+    }
+  }).catch((error) => {
+    console.error(error);
+  });
+</script>
 
 </body>
 </html>

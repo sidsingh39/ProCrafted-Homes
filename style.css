@@ -388,3 +388,26 @@ footer {
   from { opacity: 0; transform: scale(0.9); }
   to { opacity: 1; transform: scale(1); }
 }
+/* ===== Scroll Animations ===== */
+.fade-up, .fade-in, .slide-in-left, .slide-in-right {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease;
+}
+
+.fade-in {
+  transform: none;
+}
+
+.slide-in-left {
+  transform: translateX(-50px);
+}
+
+.slide-in-right {
+  transform: translateX(50px);
+}
+
+.visible {
+  opacity: 1;
+  transform: translate(0, 0);
+}

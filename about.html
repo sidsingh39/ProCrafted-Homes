@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>About | ProCrafted Homes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <div class="logo">ProCrafted Homes</div>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="contractors.html">Contractors</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="tools.html">Tools</a></li>
+    <li><a href="about.html" style="color:var(--secondary)">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO SECTION -->
+<section class="about-hero fade-in" style="text-align:center; padding:80px 60px; background:#f9f9f9;">
+  <h1 style="font-family:'Playfair Display'; font-size:2.8rem;">We Don’t Just Build Homes — We Build Trust.</h1>
+  <p style="max-width:700px; margin:auto; margin-top:15px; font-size:1.1rem; color:#555;">
+    At ProCrafted Homes, our mission is to craft timeless spaces that blend creativity, precision, and care.
+  </p>
+</section>
+
+<!-- WHO WE ARE -->
+<section class="about-content fade-up" style="display:flex; align-items:center; gap:50px; padding:60px 70px; flex-wrap:wrap;">
+  <img src="images/projects/villa1.jpg" alt="About Us" class="slide-in-left" style="width:45%; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1);">
+  <div class="slide-in-right" style="flex:1; min-width:300px;">
+    <h2 style="font-family:'Playfair Display'; margin-bottom:15px;">Who We Are</h2>
+    <p style="line-height:1.7;">
+      ProCrafted Homes is a premium construction and design firm offering end-to-end solutions from architecture to interiors.
+      We combine innovation with reliability to deliver spaces that define comfort, elegance, and sustainability.
+    </p>
+  </div>
+</section>
+
+<!-- MISSION / VISION / VALUES -->
+<section class="values fade-up" style="display:flex; justify-content:center; gap:30px; flex-wrap:wrap; padding:60px 70px; background:#fff;">
+  <div class="value-card slide-in-left" style="flex:1; min-width:250px; max-width:300px; padding:25px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.05); text-align:center;">
+    <h3>Our Mission</h3>
+    <p>To deliver lasting quality through thoughtful design and precise construction.</p>
+  </div>
+  <div class="value-card fade-up" style="flex:1; min-width:250px; max-width:300px; padding:25px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.05); text-align:center;">
+    <h3>Our Vision</h3>
+    <p>To redefine modern living through architecture that inspires and endures.</p>
+  </div>
+  <div class="value-card slide-in-right" style="flex:1; min-width:250px; max-width:300px; padding:25px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.05); text-align:center;">
+    <h3>Our Values</h3>
+    <p>Integrity, craftsmanship, and trust form the foundation of every project we undertake.</p>
+  </div>
+</section>
+
+<footer>
+  © 2025 ProCrafted Homes | Built with Precision and Passion
+</footer>
+
+<!-- ANIMATION SCRIPT -->
+<script>
+  const animatedElements = document.querySelectorAll('.fade-up, .fade-in, .slide-in-left, .slide-in-right');
+
+  function animateOnScroll() {
+    animatedElements.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight - 100) {
+        el.classList.add('visible');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', animateOnScroll);
+  window.addEventListener('load', animateOnScroll);
+</script>
+
+</body>
+</html>
