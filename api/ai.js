@@ -1,4 +1,4 @@
-// api/ai.js  — Hugging Face Router (hf-inference) proxy
+// api/ai.js — quick, pragmatic HF router with guaranteed-free fallbacks
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
@@ -10,68 +10,70 @@ export default async function handler(req, res) {
     console.log("HF key present?", Boolean(HF_KEY));
     if (!HF_KEY) return res.status(500).json({ error: "Server misconfigured: missing HF_API_KEY" });
 
-    // Pick a model that is commonly available; change if you prefer another.
-    // NOTE: some models require paid access or enabling hosted inference on HF.
-    const MODEL = "google/flan-t5-large";
-
-    // router.huggingface.co/hf-inference is the recommended modern endpoint
     const url = "https://router.huggingface.co/hf-inference";
 
-    const payload = {
-      model: MODEL,
-      // using 'input' / 'inputs' — many router-backed models understand this
-      input: message,
-      parameters: { max_new_tokens: 200, temperature: 0.7 }
-    };
+    // FAST, free-first candidate models (prioritise availability over quality)
+    const candidates = [
+      "distilgpt2",
+      "gpt2",
+      "sshleifer/tiny-gpt2"
+    ];
 
-    const r = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${HF_KEY}`
-      },
-      body: JSON.stringify(payload)
-    });
+    // Small prompt prefix to steer responses toward construction-help style.
+    // Keep it short because these small models have tiny context windows.
+    const promptPrefix = "You are ProCrafted AI, a concise construction assistant. Answer briefly and practically.\nUser: ";
 
-    const text = await r.text();
+    let lastError = null;
+    for (const MODEL of candidates) {
+      try {
+        const payload = {
+          model: MODEL,
+          // small models expect "inputs" or "input" as raw text
+          inputs: promptPrefix + message,
+          parameters: { max_new_tokens: 120, temperature: 0.6 }
+        };
 
-    if (!r.ok) {
-      console.error("HuggingFace router error:", text);
-      return res.status(500).json({ error: "HuggingFace error", details: text });
-    }
+        const r = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${HF_KEY}`
+          },
+          body: JSON.stringify(payload)
+        });
 
-    // Try to parse common shapes. Router may return plain text OR JSON.
-    let reply = (text || "").trim();
+        const text = await r.text();
 
-    try {
-      const parsed = JSON.parse(text);
-      // Common possible shapes:
-      // 1) { generated_text: "..." }
-      // 2) [{ generated_text: "..." }, ...]
-      // 3) { outputs: [{ generated_text: "..."}] }
-      // 4) { result: "..." } or plain string in parsed
-      if (parsed === null) {
-        reply = "";
-      } else if (typeof parsed === "string") {
-        reply = parsed;
-      } else if (Array.isArray(parsed)) {
-        // array of results
-        if (parsed[0]?.generated_text) reply = parsed[0].generated_text;
-        else if (parsed[0]?.output) reply = parsed[0].output;
-        else reply = JSON.stringify(parsed);
-      } else {
-        // object
-        if (parsed.generated_text) reply = parsed.generated_text;
-        else if (parsed.outputs && parsed.outputs[0]?.generated_text) reply = parsed.outputs[0].generated_text;
-        else if (parsed.result) reply = parsed.result;
-        else if (parsed.output) reply = parsed.output;
-        else reply = JSON.stringify(parsed);
+        if (!r.ok) {
+          console.warn(`Model ${MODEL} returned ${r.status}:`, text);
+          lastError = { model: MODEL, status: r.status, body: text };
+          continue; // try next model
+        }
+
+        // parse common return shapes, fallback to raw text
+        let reply = (text || "").trim();
+        try {
+          const parsed = JSON.parse(text);
+          if (parsed === null) reply = "";
+          else if (typeof parsed === "string") reply = parsed;
+          else if (Array.isArray(parsed)) {
+            reply = parsed[0]?.generated_text ?? parsed[0]?.output ?? JSON.stringify(parsed);
+          } else {
+            reply = parsed.generated_text ?? parsed.outputs?.[0]?.generated_text ?? parsed.result ?? parsed.output ?? JSON.stringify(parsed);
+          }
+        } catch (e) {
+          // keep text as-is
+        }
+
+        console.log(`Model ${MODEL} succeeded.`);
+        return res.json({ reply: String(reply).trim() || "No reply from model.", model: MODEL });
+      } catch (err) {
+        console.error(`Error calling model ${MODEL}:`, err);
+        lastError = { model: MODEL, error: String(err) };
       }
-    } catch (e) {
-      // not JSON — keep text
     }
 
-    return res.json({ reply: String(reply).trim() || "No reply from model." });
+    return res.status(502).json({ error: "All models failed", details: lastError });
   } catch (err) {
     console.error("Server error in /api/ai:", err);
     return res.status(500).json({ error: "Server error", message: String(err) });
