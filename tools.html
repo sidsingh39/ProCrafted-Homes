@@ -166,5 +166,26 @@ window.addEventListener("scroll", () => {
     lucide.createIcons();
   });
 </script>
+<!-- AI Chat (place before </body>) -->
+<div id="ai-chat-root">
+  <button id="ai-toggle" aria-label="Open AI Chat">AI</button>
+
+  <div id="ai-chat" aria-hidden="true">
+    <div class="ai-header">
+      <strong>ProCrafted AI</strong>
+      <button id="ai-close" aria-label="Close">×</button>
+    </div>
+
+    <div id="ai-messages" class="ai-messages" role="log" aria-live="polite"></div>
+
+    <form id="ai-form" class="ai-form">
+      <input id="ai-input" autocomplete="off" placeholder="Ask about materials, cost, contractors..." />
+      <button type="submit">Send</button>
+    </form>
+  </div>
+</div>
+
+<!-- include the AI JS -->
+<script defer src="aiChat.js"></script>
 </body>
 </html>
