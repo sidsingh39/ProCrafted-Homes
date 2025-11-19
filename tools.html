@@ -50,17 +50,17 @@
 
     <!-- Estimator Box -->
     <div id="estimator" class="estimator-box">
+      <!-- Step 1 -->
       <div class="step active" id="step1">
         <h3>Step 1: Enter Project Area</h3>
         <input id="area" type="number" placeholder="Enter area in sq.ft">
-        <button class="btn nextBtn">Next</button>
+        <div class="nav-buttons">
+          <button type="button" class="btn nextBtn">Next</button>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
 
       <!-- Step 2 -->
-      <div class="step" id="step2">
+      <div class="step" id="step2" style="display:none;">
         <h3>Step 2: Select Construction Quality</h3>
         <select id="quality">
           <option value="">Choose...</option>
@@ -69,13 +69,13 @@
           <option value="premium">Premium (₹2,500/sq.ft)</option>
         </select>
         <div class="nav-buttons">
-          <button class="btn prevBtn">Back</button>
-          <button class="btn nextBtn">Next</button>
+          <button type="button" class="btn prevBtn">Back</button>
+          <button type="button" class="btn nextBtn">Next</button>
         </div>
       </div>
 
       <!-- Step 3 -->
-      <div class="step" id="step3">
+      <div class="step" id="step3" style="display:none;">
         <h3>Step 3: Select Finishing Type</h3>
         <select id="finish">
           <option value="">Choose...</option>
@@ -83,22 +83,25 @@
           <option value="luxury">Luxury Finish (₹200/sq.ft)</option>
         </select>
         <div class="nav-buttons">
-          <button class="btn prevBtn">Back</button>
-          <button class="btn nextBtn">Next</button>
+          <button type="button" class="btn prevBtn">Back</button>
+          <button type="button" class="btn nextBtn">Next</button>
         </div>
       </div>
 
       <!-- Step 4 -->
-      <div class="step" id="step4">
+      <div class="step" id="step4" style="display:none;">
         <h3>Step 4: Estimated Cost</h3>
         <p id="result"></p>
         <div id="suggestions"></div>
-        <button class="btn prevBtn">Back</button>
+        <div class="nav-buttons">
+          <button type="button" class="btn prevBtn">Back</button>
+        </div>
       </div>
 
-    </div>
-  </div>
+    </div> <!-- /estimator -->
+  </div> <!-- /estimator-container -->
 </section>
+
 <div class="divider-fade"></div>
 
 <section class="why-estimator fade-up">
@@ -185,7 +188,7 @@ window.addEventListener("scroll", () => {
   </div>
 </div>
 
-<!-- include the AI JS -->
-<script defer src="aiChat.js"></script>
+<script type="module" src="aiChatLocal.js"></script>
+
 </body>
 </html>
