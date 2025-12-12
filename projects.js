@@ -2,49 +2,57 @@ const projects = [
   {
     title: "Lakeview Villa",
     category: "villa",
-    image: "images/projects/villa1.jpg",
+    thumb: "images/projects/thumbs/villa1-thumb.jpg",
+    full: "images/projects/villa1.jpg",
     desc: "Luxury waterfront villa built with premium materials."
   },
   {
     title: "Urban Loft Interior",
     category: "interior",
-    image: "images/projects/interior1.jpg",
+    thumb: "images/projects/thumbs/interior1-thumb.jpg",
+    full: "images/projects/interior1.jpg",
     desc: "Modern loft design with industrial aesthetics."
   },
   {
     title: "Downtown Office Renovation",
     category: "commercial",
-    image: "images/projects/commercial1.jpg",
+    thumb: "images/projects/thumbs/commercial1-thumb.jpg",
+    full: "images/projects/commercial1.jpg",
     desc: "Complete corporate workspace transformation."
   },
   {
     title: "Corporate Tower Upgrade",
     category: "commercial",
-    image: "images/projects/commercial2.jpg",
+    thumb: "images/projects/thumbs/commercial2-thumb.jpg",
+    full: "images/projects/commercial2.jpg",
     desc: "Redesigned workspace interiors to enhance functionality and brand appeal."
   },
   {
     title: "Classic Home Renovation",
     category: "renovation",
-    image: "images/projects/reno1.jpg",
+    thumb: "images/projects/thumbs/reno1-thumb.jpg",
+    full: "images/projects/reno1.jpg",
     desc: "Restored colonial home with contemporary interiors."
   },
   {
     title: "Modern Kitchen Renovation",
     category: "renovation",
-    image: "images/projects/reno2.jpg",
+    thumb: "images/projects/thumbs/reno2-thumb.jpg",
+    full: "images/projects/reno2.jpg",
     desc:"Redefined kitchen spaces crafted with precision and poise.",
   },
   {
     title: "Luxury Penthouse",
     category: "villa",
-    image: "images/projects/villa2.jpg",
+    thumb: "images/projects/thumbs/villa2-thumb.jpg",
+    full: "images/projects/villa2.jpg",
     desc: "High-end penthouse with panoramic city view."
   },
   {
     title: "Artisan Kitchen Design",
     category: "interior",
-    image: "images/projects/interior2.jpg",
+    thumb: "images/projects/thumbs/interior2-thumb.jpg",
+    full: "images/projects/interior2.jpg",
     desc: "Elegant modular kitchen with minimalist design."
   }
 ];
@@ -61,7 +69,8 @@ function displayProjects(filter) {
     card.className = "project-card";
 
     const img = document.createElement("img");
-    img.src = p.image;
+    img.src = p.thumb;         // use thumbnail for fast loading
+    img.dataset.full = p.full; // store full-size image for lightbox
     img.alt = p.title;
 
     // Performance boosts
@@ -115,7 +124,7 @@ grid.addEventListener("click", (e) => {
   const title = card.querySelector(".project-overlay h3").innerText;
   const desc = card.querySelector(".project-overlay p").innerText;
 
-  lightboxImg.src = img.src;
+  lightboxImg.src = img.dataset.full;
   lightboxTitle.textContent = title;
   lightboxDesc.textContent = desc;
   lightbox.classList.add("active");
