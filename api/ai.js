@@ -11,7 +11,8 @@ export default async function handler(req, res) {
     if (!API_KEY)
       return res.status(500).json({ error: "Missing GOOGLE_API_KEY" });
 
-    const url = `https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${API_KEY}`;
+    const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash-001:generateContent?key=${API_KEY}`;
+
 
 
     const payload = {
