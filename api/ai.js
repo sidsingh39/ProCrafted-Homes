@@ -14,57 +14,45 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: "Missing HF_API_KEY" });
     }
 
-    // FREE model — good quality + fast
+    // Free, high-quality lightweight model
     const model = "meta-llama/Llama-3.2-3B-Instruct";
 
-    const payload = {
-      model,
-      inputs: message,
-      parameters: {
-        max_new_tokens: 150,
-        temperature: 0.7
-      }
-    };
-
-    const r = await fetch("https://router.huggingface.co/hf-inference", {
+    const r = await fetch("https://router.huggingface.co/v1/chat/completions", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${HF_KEY}`,
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(payload)
+      body: JSON.stringify({
+        model,
+        messages: [
+          { role: "system", content: "You are ProCrafted AI, a helpful construction assistant." },
+          { role: "user", content: message }
+        ],
+        max_tokens: 150,
+        temperature: 0.7
+      })
     });
 
     const data = await r.json();
 
     if (!r.ok || data.error) {
-      console.error("HF Router error:", data);
+      console.error("HF Router Error:", data);
       return res.status(502).json({
-        error: data.error || "HF Router request failed",
+        error: data.error || "HF Router returned an error",
         details: data
       });
     }
 
-    let reply = "";
-
-    // Extract reply from router response formats
-    if (Array.isArray(data)) {
-      reply = data[0]?.generated_text || "";
-    } else if (data.generated_text) {
-      reply = data.generated_text;
-    } else {
-      reply = JSON.stringify(data);
-    }
-
-    reply = reply.replace(message, "").trim();
+    const reply = data.choices?.[0]?.message?.content || "No reply generated.";
 
     return res.json({
-      reply: reply || "No reply generated.",
-      model
+      reply: reply.trim(),
+      model,
     });
 
   } catch (err) {
-    console.error("HF router exception:", err);
+    console.error("HF Router exception:", err);
     return res.status(500).json({ error: "Server error", message: String(err) });
   }
 }
