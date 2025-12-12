@@ -30,14 +30,14 @@
 </nav>
 
 <!-- Contact Section -->
-<section class="contact-section fade-in" style="padding:70px;">
+<section class="contact-section reveal" style="padding:70px;">
   <h2 class="fade-up" style="text-align:center; font-family:'Playfair Display'; font-size:2.2rem;">Let’s Build Together</h2>
   <p class="fade-up" style="text-align:center; margin-top:10px; color:#666;">We’d love to hear from you. Let’s bring your vision to life.</p>
 
-  <div class="fade-up" style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:40px; margin-top:50px;">
+  <div class="reveal" style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:40px; margin-top:50px;">
 
     <!-- Contact Form -->
-    <form onsubmit="handleSubmit(event)" class="slide-in-left" style="flex:1; min-width:300px; max-width:500px;">
+    <form onsubmit="handleSubmit(event)" class="visible" style="flex:1; min-width:300px; max-width:500px;">
       <label>Name</label><br>
       <input type="text" required placeholder="Your Name" style="width:100%; padding:10px; margin-bottom:15px; border-radius:5px; border:1px solid #ccc;"><br>
 
@@ -51,7 +51,7 @@
     </form>
 
     <!-- Contact Info -->
-    <div class="slide-in-right" style="flex:1; min-width:250px;">
+    <div class="reveal" style="flex:1; min-width:250px;">
       <h3 style="margin-bottom:10px;">Reach Us At</h3>
       <p>📍 Mumbai, India</p>
       <p>✉️ info@procraftedhomes.com</p>
@@ -71,22 +71,6 @@
 </footer>
 
 <!-- Animation Script -->
-<script>
-  const animatedElements = document.querySelectorAll('.fade-up, .fade-in, .slide-in-left, .slide-in-right');
-
-  function animateOnScroll() {
-    animatedElements.forEach(el => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight - 100) {
-        el.classList.add('visible');
-      }
-    });
-  }
-
-  window.addEventListener('scroll', animateOnScroll);
-  window.addEventListener('load', animateOnScroll);
-</script>
-
 <script>
   const elements = document.querySelectorAll(
     ".fade-up, .slide-in-left, .slide-in-right, .zoom-in, .fade-glow, .reveal"
