@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const qualityRate = qualityRates[qualityKey] ?? qualityRates.basic;
     const finishRate = finishRates[finishKey] ?? finishRates.standard;
 
-    const totalCost = area * (qualityRate + finishRate);
+    const totalCost = area * (qualityRate + finishRate)*1.07;
     const formatted = totalCost.toLocaleString('en-IN');
 
     result.innerHTML = `

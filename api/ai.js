@@ -1,79 +1,52 @@
-// api/ai.js — quick, pragmatic HF router with guaranteed-free fallbacks
 export default async function handler(req, res) {
-  if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
+  if (req.method !== "POST")
+    return res.status(405).json({ error: "Method not allowed" });
 
   try {
     const { message } = req.body;
-    if (!message) return res.status(400).json({ error: "No message provided" });
+    if (!message)
+      return res.status(400).json({ error: "No message provided" });
 
-    const HF_KEY = process.env.HF_API_KEY;
-    console.log("HF key present?", Boolean(HF_KEY));
-    if (!HF_KEY) return res.status(500).json({ error: "Server misconfigured: missing HF_API_KEY" });
+    const API_KEY = process.env.GOOGLE_API_KEY;
+    if (!API_KEY)
+      return res.status(500).json({ error: "Missing GOOGLE_API_KEY" });
 
-    const url = "https://router.huggingface.co/hf-inference";
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
-    // FAST, free-first candidate models (prioritise availability over quality)
-    const candidates = [
-      "distilgpt2",
-      "gpt2",
-      "sshleifer/tiny-gpt2"
-    ];
-
-    // Small prompt prefix to steer responses toward construction-help style.
-    // Keep it short because these small models have tiny context windows.
-    const promptPrefix = "You are ProCrafted AI, a concise construction assistant. Answer briefly and practically.\nUser: ";
-
-    let lastError = null;
-    for (const MODEL of candidates) {
-      try {
-        const payload = {
-          model: MODEL,
-          // small models expect "inputs" or "input" as raw text
-          inputs: promptPrefix + message,
-          parameters: { max_new_tokens: 120, temperature: 0.6 }
-        };
-
-        const r = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${HF_KEY}`
-          },
-          body: JSON.stringify(payload)
-        });
-
-        const text = await r.text();
-
-        if (!r.ok) {
-          console.warn(`Model ${MODEL} returned ${r.status}:`, text);
-          lastError = { model: MODEL, status: r.status, body: text };
-          continue; // try next model
+    const payload = {
+      contents: [
+        {
+          role: "user",
+          parts: [{ text: message }]
         }
+      ]
+    };
 
-        // parse common return shapes, fallback to raw text
-        let reply = (text || "").trim();
-        try {
-          const parsed = JSON.parse(text);
-          if (parsed === null) reply = "";
-          else if (typeof parsed === "string") reply = parsed;
-          else if (Array.isArray(parsed)) {
-            reply = parsed[0]?.generated_text ?? parsed[0]?.output ?? JSON.stringify(parsed);
-          } else {
-            reply = parsed.generated_text ?? parsed.outputs?.[0]?.generated_text ?? parsed.result ?? parsed.output ?? JSON.stringify(parsed);
-          }
-        } catch (e) {
-          // keep text as-is
-        }
+    const r = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
 
-        console.log(`Model ${MODEL} succeeded.`);
-        return res.json({ reply: String(reply).trim() || "No reply from model.", model: MODEL });
-      } catch (err) {
-        console.error(`Error calling model ${MODEL}:`, err);
-        lastError = { model: MODEL, error: String(err) };
-      }
+    const data = await r.json();
+
+    if (!r.ok) {
+      console.error("Gemini error:", data);
+      return res.status(502).json({
+        error: "Gemini API request failed",
+        details: data
+      });
     }
 
-    return res.status(502).json({ error: "All models failed", details: lastError });
+    const reply =
+      data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+      "No response generated.";
+
+    return res.json({
+      reply: reply.trim(),
+      model: "gemini-1.5-flash"
+    });
+
   } catch (err) {
     console.error("Server error in /api/ai:", err);
     return res.status(500).json({ error: "Server error", message: String(err) });
