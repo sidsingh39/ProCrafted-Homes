@@ -1,56 +1,58 @@
 export default async function handler(req, res) {
-  if (req.method !== "POST")
+  if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
+  }
 
   try {
     const { message } = req.body;
-    if (!message)
+    if (!message) {
       return res.status(400).json({ error: "No message provided" });
+    }
 
-    const API_KEY = process.env.GOOGLE_API_KEY;
-    if (!API_KEY)
-      return res.status(500).json({ error: "Missing GOOGLE_API_KEY" });
+    const HF_KEY = process.env.HF_API_KEY;
+    if (!HF_KEY) {
+      return res.status(500).json({ error: "Missing HF_API_KEY" });
+    }
 
-    const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash-001:generateContent?key=${API_KEY}`;
+    // FREE HuggingFace model: Llama-3.2-3B-Instruct
+    const model = "meta-llama/Llama-3.2-3B-Instruct";
 
-
+    const url = `https://api-inference.huggingface.co/models/${model}`;
 
     const payload = {
-      contents: [
-        {
-          role: "user",
-          parts: [{ text: message }]
-        }
-      ]
+      inputs: message,
+      parameters: {
+        max_new_tokens: 150,
+        temperature: 0.6,
+      }
     };
 
     const r = await fetch(url, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
+      headers: {
+        "Authorization": `Bearer ${HF_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
     });
 
     const data = await r.json();
 
-    if (!r.ok) {
-      console.error("Gemini error:", data);
-      return res.status(502).json({
-        error: "Gemini API request failed",
-        details: data
-      });
+    if (data.error) {
+      return res.status(502).json({ error: data.error });
     }
 
     const reply =
-      data?.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "No response generated.";
+      data[0]?.generated_text?.replace(message, "")?.trim() ||
+      "No reply generated.";
 
     return res.json({
-      reply: reply.trim(),
-      model: "gemini-1.5-flash"
+      reply,
+      model,
     });
 
   } catch (err) {
-    console.error("Server error in /api/ai:", err);
+    console.error("HF error:", err);
     return res.status(500).json({ error: "Server error", message: String(err) });
   }
 }
