@@ -23,7 +23,7 @@
 </nav>
 
 <!-- HERO SECTION -->
-<section class="about-hero fade-up" style="text-align:center; padding:80px 60px; background:#f9f9f9;">
+<section class="about-hero" style="text-align:center; padding:80px 60px; background:#f9f9f9;">
   <h1 class="reveal" style="font-family:'Playfair Display'; font-size:2.8rem;">
     We Don’t Just Build Homes — We Build Trust.
   </h1>
@@ -33,10 +33,16 @@
 </section>
 
 <!-- WHO WE ARE -->
-<section class="about-content fade-up" style="display:flex; align-items:center; gap:50px; padding:60px 70px; flex-wrap:wrap;">
-  <img src="images/projects/villa1.jpg" alt="About Us" class="slide-in-left"
-       style="width:45%; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1);">
-  <div class="slide-in-right" style="flex:1; min-width:300px;">
+<section class="about-content" style="display:flex; align-items:center; gap:50px; padding:60px 70px; flex-wrap:wrap;">
+  <img 
+  src="images/projects/thumbs/villa1-thumb.jpg" 
+  data-full="images/projects/villa1.jpg"
+  alt="About Us"
+  class="visible"
+  loading="lazy"
+  decoding="async"
+  style="width:45%; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1);">
+  <div class="visible" style="flex:1; min-width:300px;">
     <h2 style="font-family:'Playfair Display'; margin-bottom:15px;">Who We Are</h2>
     <p style="line-height:1.7;">
       ProCrafted Homes is a premium construction and design firm offering end-to-end solutions from architecture to interiors.
@@ -46,18 +52,18 @@
 </section>
 
 <!-- MISSION / VISION / VALUES -->
-<section class="values fade-up" style="display:flex; justify-content:center; gap:30px; flex-wrap:wrap; padding:60px 70px; background:#fff;">
-  <div class="value-card slide-in-left"
+<section class="values" style="display:flex; justify-content:center; gap:30px; flex-wrap:wrap; padding:60px 70px; background:#fff;">
+  <div class="value-card visible"
        style="flex:1; min-width:250px; max-width:300px; padding:25px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.05); text-align:center;">
     <h3>Our Mission</h3>
     <p>To deliver lasting quality through thoughtful design and precise construction.</p>
   </div>
-  <div class="value-card fade-up"
+  <div class="value-card visible"
        style="flex:1; min-width:250px; max-width:300px; padding:25px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.05); text-align:center;">
     <h3>Our Vision</h3>
     <p>To redefine modern living through architecture that inspires and endures.</p>
   </div>
-  <div class="value-card slide-in-right"
+  <div class="value-card visible"
        style="flex:1; min-width:250px; max-width:300px; padding:25px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.05); text-align:center;">
     <h3>Our Values</h3>
     <p>Integrity, craftsmanship, and trust form the foundation of every project we undertake.</p>
