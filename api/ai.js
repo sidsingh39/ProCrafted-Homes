@@ -14,45 +14,57 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: "Missing HF_API_KEY" });
     }
 
-    // FREE HuggingFace model: Llama-3.2-3B-Instruct
+    // FREE model — good quality + fast
     const model = "meta-llama/Llama-3.2-3B-Instruct";
 
-    const url = `https://api-inference.huggingface.co/models/${model}`;
-
     const payload = {
+      model,
       inputs: message,
       parameters: {
         max_new_tokens: 150,
-        temperature: 0.6,
+        temperature: 0.7
       }
     };
 
-    const r = await fetch(url, {
+    const r = await fetch("https://router.huggingface.co/hf-inference", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${HF_KEY}`,
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(payload)
     });
 
     const data = await r.json();
 
-    if (data.error) {
-      return res.status(502).json({ error: data.error });
+    if (!r.ok || data.error) {
+      console.error("HF Router error:", data);
+      return res.status(502).json({
+        error: data.error || "HF Router request failed",
+        details: data
+      });
     }
 
-    const reply =
-      data[0]?.generated_text?.replace(message, "")?.trim() ||
-      "No reply generated.";
+    let reply = "";
+
+    // Extract reply from router response formats
+    if (Array.isArray(data)) {
+      reply = data[0]?.generated_text || "";
+    } else if (data.generated_text) {
+      reply = data.generated_text;
+    } else {
+      reply = JSON.stringify(data);
+    }
+
+    reply = reply.replace(message, "").trim();
 
     return res.json({
-      reply,
-      model,
+      reply: reply || "No reply generated.",
+      model
     });
 
   } catch (err) {
-    console.error("HF error:", err);
+    console.error("HF router exception:", err);
     return res.status(500).json({ error: "Server error", message: String(err) });
   }
 }
