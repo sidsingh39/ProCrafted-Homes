@@ -55,19 +55,40 @@ const buttons = document.querySelectorAll(".filter-btn");
 function displayProjects(filter) {
   grid.innerHTML = "";
   const filtered = filter === "all" ? projects : projects.filter(p => p.category === filter);
+
   filtered.forEach(p => {
     const card = document.createElement("div");
     card.className = "project-card";
-    card.innerHTML = `
-      <img src="${p.image}" alt="${p.title}">
-      <div class="project-overlay">
-        <h3>${p.title}</h3>
-        <p>${p.desc}</p>
-      </div>
-    `;
+
+    const img = document.createElement("img");
+    img.src = p.image;
+    img.alt = p.title;
+
+    // Performance boosts
+    img.loading = "lazy";       // browser loads only when in view
+    img.decoding = "async";     // decode in background
+    img.width = 400;            // adjust to card width
+    img.height = 300;           // adjust to card height
+
+    const overlay = document.createElement("div");
+    overlay.className = "project-overlay";
+
+    const h3 = document.createElement("h3");
+    h3.textContent = p.title;
+
+    const desc = document.createElement("p");
+    desc.textContent = p.desc;
+
+    overlay.appendChild(h3);
+    overlay.appendChild(desc);
+
+    card.appendChild(img);
+    card.appendChild(overlay);
+
     grid.appendChild(card);
   });
 }
+
 
 buttons.forEach(btn => {
   btn.addEventListener("click", () => {
