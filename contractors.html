@@ -22,10 +22,10 @@
   </ul>
 </nav>
 
-<section class="contractors-section fade-up">
+<section class="contractors-section">
   <h2 class="reveal">Find Trusted Contractors</h2>
 
-  <div class="filter-bar fade-up">
+  <div class="filter-bar">
     <input id="searchBar" placeholder="Search by name, skill, or city">
     <select id="cityFilter">
       <option value="all">All Cities</option>
@@ -43,9 +43,6 @@
 
 <!-- Contractor Data Script -->
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
-  import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
-
   const USE_FIREBASE = false;
 
   const firebaseConfig = {
@@ -95,10 +92,9 @@
 
     filtered.forEach((c, i) => {
       const card = document.createElement("div");
-      card.className = "contractor-card fade-up visible";
-      card.style.animationDelay = `${i * 100}ms`;
+      card.className = "contractor-card visible";
       card.innerHTML = `
-        <img src="${c.image || 'images/default-contractor.jpg'}" alt="${c.name}" style="width:100%; height:200px; object-fit:cover; border-radius:8px 8px 0 0;">
+        <img src="${c.image || 'images/default-contractor.jpg'}" alt="${c.name}" loading="lazy" decoding="async" style="width:100%; height:200px; object-fit:cover; border-radius:8px 8px 0 0;">
         <div class="contractor-info" style="padding:15px;">
           <h3>${c.name}</h3>
           <p><strong>City:</strong> ${c.location}</p>
