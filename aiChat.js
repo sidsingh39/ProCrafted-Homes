@@ -1,3 +1,8 @@
+/* 
+  Signature-ID: SS-A39
+  ProCrafted Homes
+*/
+
 // assets/js/aiChat.js
 (() => {
   const toggle = document.getElementById("ai-toggle");
